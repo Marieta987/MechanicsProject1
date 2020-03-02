@@ -1,0 +1,117 @@
+import java.util.*;
+
+public class Main {
+    
+	float init_v;    //initialspeed
+	float init_d;    //initial distance
+	float dur_t;     // duration of the yellow light
+	float int_w;     //intersection width
+	float acc_p;     //constant positive acceleration
+	float acc_n;     //constant negative acceleration
+	
+	public Main(float init_v,float init_d, float dur_t, float int_w, float acc_p, float acc_n) {
+		Scanner scan = new Scanner(System.in); 
+    
+		if( init_v < 20 ||  init_v > 80) { //check boundaries
+			System.out.println("Please input values from 20 to 80");
+			this.init_v = scan.nextFloat();
+		}
+		else {
+			this.init_v =  init_v;
+		}
+    
+		if(init_d < 10 || init_d > 150) { //check boundaries
+			System.out.println("Please input values from 10 to 150");
+			this.init_d = scan.nextFloat();
+		}
+		else {
+			this.init_d = init_d;
+		}
+    
+		if(dur_t < 2 || dur_t > 5) { //check boundaries
+			System.out.println("Please input values from 2 to 5");
+			this.dur_t = scan.nextFloat();
+		}
+		else {
+			this.dur_t = dur_t;
+		}
+    
+		if(int_w < 5 || int_w > 20) { //check boundaries
+			System.out.println("Please input values from 5 to 20");
+			this.int_w = scan.nextFloat();
+		}
+		else {
+			this.int_w = int_w;
+		}
+    
+		if(acc_p < 1 || acc_p > 3) { //check boundaries
+			System.out.println("Please input values from 1 to 3");
+			this.acc_p = scan.nextFloat();
+		}
+		else {
+			this.acc_p = acc_p;
+		}
+    
+		if(acc_n < 1 || acc_n > 3) { //check boundaries
+			System.out.println("Please input values from 1 to 3");
+			this.acc_n = scan.nextFloat();
+		}
+		else {
+			this.acc_n = acc_n;
+		}
+    
+	scan.close();
+}
+	
+	public boolean cross() {
+		System.out.println(init_v + acc_p * dur_t);
+		return ( (init_d + int_w) / ( init_v + acc_p * dur_t) <= dur_t);
+	}
+	
+	public boolean notCross() {
+		return ( ((init_d + int_w) / ( init_v + acc_p * dur_t) <= dur_t) && ((init_d + int_w) / (init_v - acc_n * dur_t) >= dur_t));
+	}
+  
+	public void approach(Main car2) {
+		if(car2.cross() && cross())
+			System.out.println("2 cars cross");
+		else if(car2.cross() || cross()) {
+			System.out.println("Collision");
+		}
+		else {
+			System.out.println("None cross");
+		}
+	}
+	
+public static void main(String[] args) {
+	  Scanner scan = new Scanner(System.in); 
+	
+	  System.out.println("Initial speed should be a number from 20 to 80");  
+    float  init_v = scan.nextFloat(); 
+    
+    System.out.println("Intitial distance should be a number from 10 to 150");  
+    float init_d = scan.nextFloat();
+    
+    System.out.println("Duration of yellow light should be a number from 2 to 5");
+    float dur_t = scan.nextFloat();
+      
+    System.out.println("Intersection's width should be a number from 5 to 20");  
+    float int_w = scan.nextFloat();
+
+    System.out.println("Car’s constant positive acceleration should be a number from 1 to 3"); 
+    float acc_p = scan.nextFloat();
+    
+    System.out.println("Car’s constant negative acceleration should be a number from 1 to 3");  
+    float acc_n = scan.nextFloat();  
+
+	}
+
+scan.close();
+  
+    Main car1 = new Main( init_v, init_d, dur_t, int_w, acc_p, acc_n);
+    Main car2 = new Main( init_v, init_d+d, dur_t, int_w, acc_p, acc_n);
+    
+    car1.approach(car2);
+  }
+}
+
